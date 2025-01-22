@@ -1,7 +1,3 @@
 package frc.robot.subsystems.pivot;
 
-
-
-public class PivotIOTalonFX implements PivotIO {
-
-}
+public class PivotIOTalonFX implements PivotIO {}

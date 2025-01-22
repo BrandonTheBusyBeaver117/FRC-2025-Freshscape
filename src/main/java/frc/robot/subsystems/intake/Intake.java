@@ -4,15 +4,30 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
   public enum Target {
-    
+    HOLD,
+    IDLE,
+    EJECT,
+    INTAKE
   }
 
-  public Intake(IntakeIO io) {}
+  private Target target = Target.IDLE;
 
+  public Intake(IntakeIO io) {
+    //hold, idle, eject, intake
+
+  }
 
   @Override
-  public void periodic(){
-
+  public void periodic() {
+    switch (target) {
+      case HOLD:
+        break;
+      case IDLE:
+        break;
+      case EJECT:
+        break;
+      case INTAKE:
+        break;
+    }
   }
-
 }

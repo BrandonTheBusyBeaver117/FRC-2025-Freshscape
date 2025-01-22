@@ -14,17 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.Mode;
 import frc.robot.autonomous.PathCommand;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
-import frc.robot.subsystems.elevator.Elevator.ElevatorTarget;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.pivot.Pivot;
@@ -54,7 +49,6 @@ public class RobotContainer {
 
   private Drive swerve; // FIXME make final, implement other robot types
   private Intake intake;
-
 
   private SendableChooser<Command> autoChooser;
 
@@ -114,7 +108,6 @@ public class RobotContainer {
               new ModuleIO() {});
     }
 
-   
     // superstructure
     if (elevator == null) {
       elevator = new Elevator(new ElevatorIO() {});
@@ -168,7 +161,7 @@ public class RobotContainer {
     // -----Flywheel Controls-----
 
     // -----Superstructure Controls-----
-    
+
   }
 
   private void configureAutos() {
