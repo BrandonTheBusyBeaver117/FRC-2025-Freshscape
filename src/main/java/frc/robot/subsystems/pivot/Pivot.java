@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase {
   public enum PivotTarget{
-  
+    
   }
 
   public Pivot(PivotIO io) {}
@@ -13,7 +13,7 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic(){
-
+  
   }
 
 }
