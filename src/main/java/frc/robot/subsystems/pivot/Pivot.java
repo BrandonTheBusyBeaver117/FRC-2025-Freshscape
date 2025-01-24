@@ -8,12 +8,16 @@ public class Pivot extends SubsystemBase {
     
   }
 
-  public Pivot(PivotIO io) {}
-
+  private PivotIO io;
+  //private PivotIOInputsAutologged inputs;
+    
+  public Pivot(PivotIO io) {
+    this.io = io;
+  }
 
   @Override
   public void periodic(){
-  
+    //updateInputs();
   }
 
 }
