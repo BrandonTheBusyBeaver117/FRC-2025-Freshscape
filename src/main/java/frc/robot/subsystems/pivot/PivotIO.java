@@ -15,6 +15,8 @@ public interface PivotIO {
 
     public void runPosition(double position);
 
+    public void runZeroing();
+
     public void stop();
 
     public void updateInputs(PivotIOInputs pivotIOInputs);
