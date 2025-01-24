@@ -2,10 +2,14 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -32,7 +36,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
             TalonFXConfiguration config = new TalonFXConfiguration();
             config.MotorOutput.Inverted = 
-                inverted ? InvertedValue.Clockwise_Poitive : InvertedValue.Counterclockwise_Positive;
+                inverted ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
             config.MotorOutput.NeutralMode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
             config.CurrentLimits.SupplyCurrentLimit = currentLimitAmps;
             config.CurrentLimits.SupplyCurrentLimit = currentLimitAmps;
@@ -43,7 +47,30 @@ public class IntakeIOTalonFX implements IntakeIO {
             velocity = talon.getVelocity();
             appliedVolts = talon.getMotorVoltage();
             supplyCurrent = talon.getSupplyCurrent();
-            BaseStatusSignal.setUpdateFrequencyForAll(null, null)
+            BaseStatusSignal.setUpdateFrequencyForAll(50, position, velocity, appliedVolts, supplyCurrent);
+
+            talon.optimizeBusUtilization();
         }
-    )
+
+        @Override
+        public void updateInputs(IntakeIOInputs inputs) {
+            inputs.connected =
+                BaseStatusSignal.refreshAll(position, velocity, appliedVolts, supplyCurrent).isOK();
+            inputs.positionRads = 
+                Units.rotationsToRadians(position.getValueAsDouble()) / mechanismReduction;
+            inputs.velocityRadsPerSec =
+                Units.rotationsToRadians(velocity.getValueAsDouble()) / mechanismReduction;
+            inputs.appliedVolts = appliedVolts.getValueAsDouble();
+            inputs.supplyCurrentAmps = supplyCurrent.getValueAsDouble();
+        }
+
+        @Override
+        public void runVolts(double volts) {
+            talon.setControl(voltageOutput.withOutput(volts));
+        }
+
+        @Override
+        public void stop() {
+            talon.setControl(neutralOutput);
+        }
 }

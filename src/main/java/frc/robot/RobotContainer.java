@@ -22,6 +22,7 @@ import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.intake.Intake.Target;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.pivot.PivotIO;
 import frc.robot.subsystems.pivot.PivotIOTalonFX;
@@ -32,6 +33,8 @@ import frc.robot.subsystems.swerve.GyroIOPigeon2;
 import frc.robot.subsystems.swerve.ModuleIO;
 import frc.robot.subsystems.swerve.ModuleIOTalonFX;
 import java.util.function.BooleanSupplier;
+
+import javax.swing.plaf.nimbus.State;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -157,6 +160,25 @@ public class RobotContainer {
             new InstantCommand(() -> swerve.setTargetHeading(new Rotation2d(Math.toRadians(232)))));
 
     // -----Intake Controls-----
+    driverA
+        .a()
+        .onTrue(
+          new InstantCommand(() -> intake.setTarget(Intake.Target.INTAKE)));
+
+    driverA
+        .a()
+        .onTrue(
+          new InstantCommand(() -> intake.setTarget(Intake.Target.EJECT)));
+
+    driverA
+        .a()
+        .onTrue(
+          new InstantCommand(() -> intake.setTarget(Intake.Target.HOLD)));
+
+    driverA
+        .a()
+        .onTrue(
+          new InstantCommand(() -> intake.setTarget(Intake.Target.IDLE)));
 
     // -----Flywheel Controls-----
 
