@@ -10,6 +10,7 @@ public interface PivotIO {
         public double velocityRotPerSec = 0;
         public double appliedVolts = 0;
         public double supplyCurrentAmps = 0;
+        public double tempCelsius = 0;
         public boolean zeroing = false;
     }
 
