@@ -11,6 +11,7 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -35,6 +36,9 @@ public class PivotIOTalonFX implements PivotIO {
     private final StatusSignal<Voltage> appliedVolts;
     private final StatusSignal<Current> supplyCurrentAmp;
     private final StatusSignal<Temperature> temp;
+
+    private final PositionVoltage positionControl = new PositionVoltage(0).withUpdateFreqHz(0);
+
     
     Optional<Integer> canCoderID;
 
@@ -104,9 +108,9 @@ public class PivotIOTalonFX implements PivotIO {
     }
 
     @Override
-    public void runPosition(double position) {
-       
-    }
+  public void runPosition(double rotations) {
+    pivotMotor.setControl(positionControl.withPosition(rotations));
+  }
 
     @Override
     public void stop() {
