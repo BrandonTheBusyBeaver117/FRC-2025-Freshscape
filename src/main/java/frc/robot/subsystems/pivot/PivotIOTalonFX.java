@@ -113,8 +113,6 @@ public class PivotIOTalonFX implements PivotIO {
   }
 
     @Override
-    public void stop() {
-        
-    }
+    public void stop() {}
 
 }

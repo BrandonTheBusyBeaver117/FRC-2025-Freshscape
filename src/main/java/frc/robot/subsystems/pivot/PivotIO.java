@@ -19,6 +19,9 @@ public interface PivotIO {
     public void stop();
 
     public void updateInputs(PivotIOInputs pivotIOInputs);
+    
+    default void runCharacterization() {}
+
 
 
 

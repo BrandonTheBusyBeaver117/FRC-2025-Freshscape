@@ -8,38 +8,94 @@ public class Pivot extends SubsystemBase {
   private PivotTarget targetState;
   private double pivotPosition;
   private PivotIO pivotIO;
-
-
-  public enum PivotTarget{
-    L4,
-    L3,
-    L2,
-    L1,
-    INTAKE,
-    STOW,
-    ZEROING;
+  
+  public enum PivotControlMode {
+    POSITION,
+    ZERO,
+    STOP,
   }
 
-  //getter
+  private PivotControlMode pivotControlMode = PivotControlMode.STOP; //this just sets it to stop by default
+  private Pivot pivot;
+
+  public enum PivotTarget {
+    //FIXME: Add placeholder values for testing (or just for teaching because this probably won't get tested)
+    L4(0),
+    L3(0),
+    L2(0),
+    L1(0),
+    INTAKE(0),
+    STOW(0),
+    ZEROING(0);
+    private double position = 0;
+
+    private PivotTarget(double position) {
+      this.position = position;
+    }
+  }
+  //getters and setters
   public double getPosition() {
     return pivotPosition;
   }
 
-  public Pivot(PivotIO io) {
-    //if the Pivot is at a certain mode, it will go to a certain angle
-      switch(targetState)  { //FIXME: ADD GETTING THE POSITION TARGETS
-        case L1: 
-        case L2: 
-        case L3:
-        case L4: 
-        case INTAKE:
-        case STOW:
-        case ZEROING:
-    }
+  public PivotControlMode getPivotControlMode(PivotControlMode pivotControlMode) {
+    return pivotControlMode;
+  }
+
+  public void setControlMode(PivotControlMode pivotControlMode) {
+    this.pivotControlMode = pivotControlMode;
   }
 
 
-  @Override
-  public void periodic(){}
+  public void setPivotTarget(PivotTarget pivotTarget) {
+      setControlMode(PivotControlMode.POSITION); 
+  }
+
+  public Pivot(PivotIO io) {}
+
+
+  
+  /*FIXME: Add the Pivot Control mode stuff in here 
+  (a switch statement saying if control mode is position,
+   it will runPosition and getPosition. If the mode is stop, then it will run a stop method (you also probably need to create that).
+   Lastly, if the mode is zero, then it will runCharacterization TODO: Ask Brandon or Audrey on what that means)*/
+  @Override  
+  public void periodic(){
+    //if the Pivot is at a certain mode, it will go to a certain angle
+    switch(targetState)  { //FIXME: ADD GETTING THE POSITION TARGETS
+        case L1 -> {
+          setPivotTarget(PivotTarget.L1);
+        } 
+        case L2 -> {
+          setPivotTarget(PivotTarget.L2);
+        } 
+        case L3 -> {
+          setPivotTarget(PivotTarget.L3);
+        } 
+        case L4 -> {
+          setPivotTarget(PivotTarget.L4);
+        } 
+        case INTAKE -> {
+          setPivotTarget(PivotTarget.INTAKE);
+        }
+        case STOW -> {
+          setPivotTarget(PivotTarget.STOW);
+        } 
+        case ZEROING -> {
+          setPivotTarget(PivotTarget.ZEROING);
+        }   
+    }
+    switch(pivotControlMode) {
+      case POSITION -> { 
+        pivotIO.runPosition(pivot.getPosition());
+      }
+      case STOP-> { 
+        pivotIO.runCharacterization();
+      }
+      case ZERO-> { 
+        pivotIO.stop();
+      }
+    }
+  }
 
 }
