@@ -53,16 +53,10 @@ public class Pivot extends SubsystemBase {
 
   public Pivot(PivotIO io) {}
 
-
-  
-  /*FIXME: Add the Pivot Control mode stuff in here 
-  (a switch statement saying if control mode is position,
-   it will runPosition and getPosition. If the mode is stop, then it will run a stop method (you also probably need to create that).
-   Lastly, if the mode is zero, then it will runCharacterization TODO: Ask Brandon or Audrey on what that means)*/
   @Override  
   public void periodic(){
     //if the Pivot is at a certain mode, it will go to a certain angle
-    switch(targetState)  { //FIXME: ADD GETTING THE POSITION TARGETS
+    switch(targetState)  { 
         case L1 -> {
           setPivotTarget(PivotTarget.L1);
         } 
@@ -90,10 +84,10 @@ public class Pivot extends SubsystemBase {
         pivotIO.runPosition(pivot.getPosition());
       }
       case STOP-> { 
-        pivotIO.runCharacterization();
+        pivotIO.stop();
       }
       case ZERO-> { 
-        pivotIO.stop();
+        pivotIO.runCharacterization();
       }
     }
   }
