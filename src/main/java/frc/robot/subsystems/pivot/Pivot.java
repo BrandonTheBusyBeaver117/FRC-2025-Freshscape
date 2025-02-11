@@ -19,11 +19,11 @@ public class Pivot extends SubsystemBase {
   private Pivot pivot;
 
   public enum PivotTarget {
-    //FIXME: Add placeholder values for testing (or just for teaching because this probably won't get tested)
-    L4(0),
-    L3(0),
-    L2(0),
-    L1(0),
+    //TODO: THESE ARE PLACEHOLDER VALUES FOR TESTING!!!1111!111
+    L4(45),
+    L3(35),
+    L2(30),
+    L1(25),
     INTAKE(0),
     STOW(0),
     ZEROING(0);

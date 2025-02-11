@@ -41,7 +41,9 @@ public class PivotIOTalonFX implements PivotIO {
 
     
     Optional<Integer> canCoderID;
-
+    public PivotIOTalonFX() {
+      this.pivotMotor = new TalonFX(motorID);
+    }
     public PivotIOTalonFX(int motorID,
     boolean inverted,
     double supplyCurrentLimit,
